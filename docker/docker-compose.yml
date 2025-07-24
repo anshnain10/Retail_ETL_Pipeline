@@ -1,0 +1,75 @@
+services:
+  namenode:
+    platform: linux/amd64
+    image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
+    container_name: namenode
+    environment:
+      - CLUSTER_NAME=bigdata
+    volumes:
+      - hadoop_namenode:/hadoop/dfs/name
+    ports:
+      - "9870:9870"
+    networks:
+      - hadoopnet
+
+  datanode:
+    platform: linux/amd64
+    image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+    container_name: datanode
+    environment:
+      - CORE_CONF_fs_defaultFS=hdfs://namenode:8020
+      - CLUSTER_NAME=bigdata
+    volumes:
+      - hadoop_datanode:/hadoop/dfs/data
+    networks:
+      - hadoopnet
+
+  spark:
+    platform: linux/amd64
+    image: bitnami/spark:latest
+    container_name: spark
+    environment:
+      - SPARK_MODE=master
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+    ports:
+      - "4040:4040"
+    volumes:
+      - ../data:/data
+      - ../spark_scripts:/spark_scripts
+      - ../spark_scripts/jars:/opt/bitnami/spark/ext_jars  # ✅ use a safe external folder
+
+    networks:
+      - hadoopnet
+
+  postgres:
+    platform: linux/amd64
+    image: postgres:13
+    container_name: postgres
+    environment:
+      POSTGRES_USER: retail_user
+      POSTGRES_PASSWORD: retail_pass
+      POSTGRES_DB: retail_db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - hadoopnet
+
+  adminer:
+    platform: linux/amd64
+    image: adminer
+    container_name: adminer
+    ports:
+      - "8080:8080"
+    networks:
+      - hadoopnet
+
+volumes:
+  hadoop_namenode:
+  hadoop_datanode:
+  pgdata:
+
+networks:
+  hadoopnet:
+
