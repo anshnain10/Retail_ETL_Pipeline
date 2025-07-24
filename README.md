@@ -13,7 +13,6 @@ This project demonstrates a complete end-to-end **ETL pipeline** built using **P
 - [📁 Project Structure](#-project-structure)
 - [🔄 ETL Workflow](#-etl-workflow)
 - [📊 Business Insights (SQL)](#-business-insights-sql)
-- [🔐 Security Notes](#-security-notes)
 - [📈 Future Enhancements](#-future-enhancements)
 - [✅ Conclusion](#-conclusion)
 
