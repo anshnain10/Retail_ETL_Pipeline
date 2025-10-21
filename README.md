@@ -191,6 +191,7 @@ This project simulates a real-world **ETL + Analytics** use case using a modern 
 ✅ Docker-based reproducibility  
 ✅ Strong SQL analytics skills
 
-> 💼 **Definitely a great project to showcase in your resume or GitHub portfolio!**
+
 
 ---
+
